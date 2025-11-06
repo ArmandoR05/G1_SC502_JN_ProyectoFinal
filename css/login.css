@@ -1,0 +1,56 @@
+.registro{
+    background: linear-gradient(135deg, #0d6efd, #fd8d0d, #0df051);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login {
+    background: linear-gradient(135deg,  #fd8d0d, #0df051,#0d6efd);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 150px;
+    height: auto;
+    background-color: white;
+    border-radius: 5%;
+}
+
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+
+.enlaces {
+    font-size: 0.9rem;
+}
+
+.enlaces a {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.enlaces a:hover {
+    text-decoration: underline;
+    color: black;
+    transition: 1s;
+}
+
+.singin-card {
+    width: 600px; 
+    max-width: 90%; 
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
