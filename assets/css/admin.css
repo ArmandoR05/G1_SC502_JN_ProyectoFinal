@@ -6,10 +6,13 @@ body {
   padding: 0;
 }
 
+<<<<<<< HEAD
 header {
   background: linear-gradient(90deg, #007bff, #00a3cc);
 }
 
+=======
+>>>>>>> d11ea60 (Diego: Agrega apartado de administracion, archivos admin, asesorias, clientes, pagos, reportes y usuarios junto con el CSS respectivo para el mismo.)
 .section-card {
   background: white;
   border-radius: 15px;

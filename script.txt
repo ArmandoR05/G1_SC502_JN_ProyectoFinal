@@ -1,0 +1,142 @@
+-- ============================================
+-- Script de Base de Datos para SIEM
+-- Sistema de Gestión Contable - Proyecto Universitario
+-- ============================================
+
+CREATE DATABASE IF NOT EXISTS siem_contabilidad
+DEFAULT CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
+
+USE siem_contabilidad;
+
+-- ============================================
+-- TABLA DE ROLES
+-- ============================================
+CREATE TABLE roles (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_rol VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(200),
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE USUARIOS
+-- ============================================
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    id_rol INT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    telefono VARCHAR(20),
+    password_hash VARCHAR(255) NOT NULL,
+    cedula VARCHAR(20) UNIQUE,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo',
+    FOREIGN KEY (id_rol) REFERENCES roles(id_rol),
+    INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE CLIENTES
+-- ============================================
+CREATE TABLE clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    razon_social VARCHAR(200),
+    tipo_identificacion ENUM('fisica', 'juridica') NOT NULL,
+    numero_identificacion VARCHAR(20) NOT NULL UNIQUE,
+    direccion TEXT,
+    provincia VARCHAR(50),
+    actividad_economica VARCHAR(200),
+    estado_cuenta ENUM('activo', 'inactivo') DEFAULT 'activo',
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX idx_numero_identificacion (numero_identificacion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE FACTURAS
+-- ============================================
+CREATE TABLE facturas (
+    id_factura INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    numero_factura VARCHAR(50) NOT NULL UNIQUE,
+    fecha_emision DATE NOT NULL,
+    subtotal DECIMAL(15,2) NOT NULL,
+    impuesto DECIMAL(15,2) NOT NULL,
+    total DECIMAL(15,2) NOT NULL,
+    estado ENUM('pendiente', 'pagada', 'anulada') DEFAULT 'pendiente',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    INDEX idx_numero_factura (numero_factura),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE ASESORÍAS
+-- ============================================
+CREATE TABLE asesorias (
+    id_asesoria INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_usuario_asignado INT,
+    titulo VARCHAR(200) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fecha_solicitud TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_programada DATETIME NULL,
+    estado ENUM('solicitada', 'programada', 'finalizada', 'cancelada') DEFAULT 'solicitada',
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    FOREIGN KEY (id_usuario_asignado) REFERENCES usuarios(id_usuario),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE REPORTES
+-- ============================================
+CREATE TABLE reportes (
+    id_reporte INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    titulo VARCHAR(200) NOT NULL,
+    tipo_reporte VARCHAR(100) NOT NULL,
+    periodo_inicio DATE NOT NULL,
+    periodo_fin DATE NOT NULL,
+    fecha_generacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ruta_archivo VARCHAR(255),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    INDEX idx_tipo_reporte (tipo_reporte)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA DE PAGOS
+-- ============================================
+CREATE TABLE pagos (
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    id_factura INT NOT NULL,
+    monto DECIMAL(15,2) NOT NULL,
+    fecha_pago DATE NOT NULL,
+    metodo_pago VARCHAR(50) NOT NULL,
+    estado ENUM('pendiente', 'confirmado') DEFAULT 'pendiente',
+    FOREIGN KEY (id_factura) REFERENCES facturas(id_factura),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- DATOS INICIALES
+-- ============================================
+
+-- Insertar roles
+INSERT INTO roles (nombre_rol, descripcion) VALUES
+('Administrador', 'Acceso total al sistema'),
+('Empleado', 'Gestión de clientes y servicios'),
+('Cliente', 'Acceso a servicios personales');
+
+-- Insertar usuario administrador
+-- Password: admin123 (encriptado con password_hash en PHP)
+INSERT INTO usuarios (id_rol, nombre, apellido, email, telefono, password_hash, cedula) VALUES
+(1, 'Admin', 'Sistema', 'admin@siem.cr', '8888-8888', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '000000000');
+
+-- Insertar cliente de ejemplo
+INSERT INTO usuarios (id_rol, nombre, apellido, email, telefono, password_hash, cedula) VALUES
+(3, 'Juan', 'Pérez', 'juan.perez@example.com', '8888-0000', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '111111111');
+
+INSERT INTO clientes (id_usuario, razon_social, tipo_identificacion, numero_identificacion, direccion, provincia, actividad_economica) VALUES
+(2, 'Comercial Pérez S.A.', 'juridica', '3-101-123456', 'San José Centro', 'San José', 'Comercio al por menor');
