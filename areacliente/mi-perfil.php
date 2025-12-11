@@ -1,3 +1,6 @@
+<?php
+require_once "../php/perfil_datos.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +27,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes somos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.php">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
                     <li class="nav-item"><a class="nav-link" href="areacliente.html">Área Cliente</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin.html">Panel Administrativo</a></li>
@@ -54,71 +57,87 @@
             <h2 class="mb-1">Mi Perfil</h2>
             <p class="text-secondary mb-4">Datos personales del cliente registrados.</p>
 
+            <?php if (!empty($mensaje)): ?>
+                <div class="alert alert-success">
+                    <?= htmlspecialchars($mensaje) ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($errores)): ?>
+                <ul class="alert alert-danger">
+                    <?php foreach ($errores as $err): ?>
+                        <li><?= htmlspecialchars($err) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <form>
+                    <form method="post" action="">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-control" id="nombre" readonly>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                value="<?= htmlspecialchars($nombreCompleto) ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="correo" readonly>
+                            <input type="email" class="form-control" id="correo" name="correo"
+                                value="<?= htmlspecialchars($email) ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono Celular</label>
-                            <input type="text" class="form-control" id="telefono" readonly>
+                            <input type="text" class="form-control" id="telefono" name="telefono"
+                                value="<?= htmlspecialchars($telefono) ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="cedula" class="form-label">Cédula</label>
-                            <input type="text" class="form-control" id="cedula" readonly>
+                            <input type="text" class="form-control" id="cedula" name="cedula"
+                                value="<?= htmlspecialchars($cedula) ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="direccion" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccion" readonly>
+                            <input type="text" class="form-control" id="direccion" name="direccion"
+                                value="<?= htmlspecialchars($direccion) ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="nacimiento" readonly>
+                            <input type="date" class="form-control" id="nacimiento" name="nacimiento"
+                                value="<?= htmlspecialchars($fechaNacimiento) ?>">
+                        </div>
+
+                        <hr>
+
+                        <p class="text-muted">Si no deseas cambiar la contraseña, deja estos campos en blanco.</p>
+
+                        <div class="mb-3">
+                            <label for="contrasenna" class="form-label">Nueva contraseña</label>
+                            <input type="password" class="form-control" id="contrasenna" name="contrasenna"
+                                placeholder="Dejar en blanco si no desea cambiarla">
                         </div>
 
                         <div class="mb-3">
-                            <label for="contrasenna" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contrasenna" readonly>
+                            <label for="ConfContrasenna" class="form-label">Confirmar nueva contraseña</label>
+                            <input type="password" class="form-control" id="ConfContrasenna" name="ConfContrasenna"
+                                placeholder="Repita la nueva contraseña">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="ConfContrasenna" class="form-label">Confirme su contraseña</label>
-                            <input type="password" class="form-control" id="ConfContrasenna" readonly>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary mt-2" id="RealizarCambios"
+                                name="RealizarCambios">
+                                Guardar cambios
+                            </button>
                         </div>
                     </form>
                 </div>
-
-                <button type="submit" class="btn btn-primary mt-4 text-center" id="RealizarCambios"
-                    name="RealizarCambios"> Realizar cambios </button>
             </div>
-
-            <script>
-                // Esto es para simular datos del cliente
-                document.getElementById("nombre").value = "Armando Núñez Rojas";
-                document.getElementById("correo").value = "armando@correo.com";
-                document.getElementById("telefono").value = "88887777";
-                document.getElementById("cedula").value = "102220333";
-                document.getElementById("direccion").value = "Alajuela / San Ramón";
-                document.getElementById("nacimiento").value = "1990-04-22";
-                document.getElementById("contrasenna").value = "12345678";
-                document.getElementById("ConfContrasenna").value = "12345678";
-            </script>
 
         </div>
     </main>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
