@@ -34,7 +34,7 @@
 
   <section class="container py-5">
     <h2 class="text-center mb-4">Contáctanos</h2>
-    <form  id="form" class="mx-auto" style="max-width: 600px;">
+    <form id="form" class="mx-auto" style="max-width: 600px;">
       <div class="mb-3">
         <label class="form-label">Nombre completo</label>
         <input type="text" class="form-control" name="nombre" id="name" required>
@@ -47,15 +47,25 @@
         <label class="form-label">Mensaje</label>
         <textarea class="form-control" name="mensaje" rows="5" id="message" required></textarea>
       </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="checkTerms">
+        <label class="form-check-label text-dark" for="checkTerms">
+          Acepto los
+          <a href="doc\TÉRMINOS Y CONDICIONES DE USO Y SEGURIDAD SIEM.pdff" download class="text-primary">
+            términos y condiciones
+          </a>
+        </label>
+      </div>
       <button type="submit" class="btn btn-primary w-100">Enviar mensaje</button>
     </form>
   </section>
 
   <footer class="bg-dark text-white text-center py-3 mt-auto">
     <p class="mb-2">© 2025 SIEM Contabilidad | Desarrollado por Equipo de Proyecto</p>
+      <a class="mb-2  footer-a" href="doc\TÉRMINOS Y CONDICIONES DE USO Y SEGURIDAD SIEM.pdf" download>Términos y condiciones</a>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/contacto.js"></script>
+  <script src="js/contacto.js"></script>
 
 </body>
 

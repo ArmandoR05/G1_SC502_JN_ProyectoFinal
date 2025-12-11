@@ -22,6 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             return;
         }
+ if (!checkTerms.checked) {
+            Swal.fire({
+                icon: "warning",
+                iconColor: '#d1a57bff',
+                title: "Debe aceptar los términos y condiciones",
+                color: 'white',
+                background: '#1b2033',
+                showConfirmButton: false,
+            });
+            return;
+        }
 
         if (name && email && message) {
             const data = {
@@ -56,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     setTimeout(() => {
                                window.location.href = '/index.html';
-                    }, 300)
+                    }, 800)
         
                 } else {
                     alert("Error: " + result);
