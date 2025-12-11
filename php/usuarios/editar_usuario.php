@@ -5,14 +5,14 @@ error_reporting(E_ALL);
 
 session_start();
 
-if (!isset($_SESSION['id_usuario'])) {
-    echo json_encode(['status' => 'error', 'mensaje' => 'No autorizado']);
+if(!isset($_SESSION['id_usuario'])){
+    header("Location: ../../index.php");
     exit();
 }
 
 include '../conexionBD.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $id_usuario = $_POST["id_usuario"] ?? 0;
     $id_rol = $_POST["id_rol"] ?? 3;
@@ -23,33 +23,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cedula = $_POST["cedula"] ?? '';
     $estado = $_POST["estado"] ?? 'activo';
 
-    if ($id_usuario <= 0 || !$nombre || !$apellido || !$email) {
-        echo json_encode(['status' => 'error', 'mensaje' => 'Datos incompletos']);
+    if($id_usuario <= 0 || !$nombre || !$apellido || !$email){
+        echo "error: Datos incompletos";
         exit();
     }
 
-    try {
-        $conexion = abrirConexion();
+    $conexion = abrirConexion();
 
-        $sql = "UPDATE usuarios 
-                SET nombre = ?, apellido = ?, email = ?, telefono = ?, 
-                    cedula = ?, id_rol = ?, estado = ?
-                WHERE id_usuario = ?";
+    $sql = "UPDATE usuarios 
+            SET nombre = ?, apellido = ?, email = ?, telefono = ?, 
+                cedula = ?, id_rol = ?, estado = ?
+            WHERE id_usuario = ?";
 
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("sssssisi", $nombre, $apellido, $email, $telefono, $cedula, $id_rol, $estado, $id_usuario);
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("sssssisi", $nombre, $apellido, $email, $telefono, $cedula, $id_rol, $estado, $id_usuario);
 
-        if ($stmt->execute()) {
-            echo json_encode(['status' => 'ok', 'mensaje' => 'Usuario actualizado exitosamente']);
-        } else {
-            echo json_encode(['status' => 'error', 'mensaje' => 'Error al actualizar usuario']);
-        }
-
-        $stmt->close();
-        cerrarConexion($conexion);
-
-    } catch (Exception $e) {
-        echo json_encode(['status' => 'error', 'mensaje' => 'Error: ' . $e->getMessage()]);
+    if($stmt->execute()){
+        echo "ok";
+    }else{
+        echo "error: ".$conexion->error;
     }
+
+    $stmt->close();
+    cerrarConexion($conexion);
 }
 ?>
