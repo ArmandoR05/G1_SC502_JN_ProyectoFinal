@@ -36,7 +36,6 @@ $pageTitle = "Área cliente";
                     <li class="nav-item"><a class="nav-link" href="/Proyecto/blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Proyecto/contacto.html">Contacto</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Proyecto/quienes-somos.html">Quiénes somos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Proyecto/admin.html">Panel Administrativo</a></li>
                 </ul>
             </div>
         </div>

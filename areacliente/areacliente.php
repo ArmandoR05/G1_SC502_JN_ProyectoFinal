@@ -23,7 +23,7 @@ require_once "../php/dashboard_datos.php";
                             <h3 class="fw-bold" id="facturas">
                                 <?= $totalFacturas ?>
                             </h3>
-                            <a href="reportes-cliente.php" class="btn btn-outline-primary btn-sm mt-2" id="verFacturas">
+                            <a href="facturas.php" class="btn btn-outline-primary btn-sm mt-2" id="verFacturas">
                                 Ver detalles
                             </a>
                         </div>
@@ -37,7 +37,7 @@ require_once "../php/dashboard_datos.php";
                             <h3 class="fw-bold" id="asesorias">
                                 <?= $totalAsesorias ?>
                             </h3>
-                            <a href="#" class="btn btn-outline-primary btn-sm mt-2" id="verAsesorias">
+                            <a href="soporte.php" class="btn btn-outline-primary btn-sm mt-2" id="verAsesorias">
                                 Ver detalles
                             </a>
                         </div>

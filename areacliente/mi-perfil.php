@@ -1,56 +1,11 @@
 <?php
 require_once "../php/perfil_datos.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área cliente</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/areacliente.css">
-</head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <img src="img/logo (1).png" alt="SIEM" height="40" class="me-2">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes somos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="areacliente.html">Área Cliente</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin.html">Panel Administrativo</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-    <aside class="menu-lateral p-3">
-
-        <h5 class="mb-3">Menú</h5>
-        <div class="links">
-            <a href="areacliente.html" class="mb-2">General</a>
-            <a href="mi-perfil.html" class="mb-2">Mi perfil</a>
-            <a href="facturación.html" class="mb-2">Facturación</a>
-            <a href="reportes-cliente.html" class="mb-2">Reportes</a>
-            <a href="soporte.html" class="mb-2">Soporte</a>
-
-            <a href="login.html" class="salir mt-5">Salir</a>
-        </div>
-
-    </aside>
+    <?php include "../partials/header.php"; ?>
+    <?php include "../partials/sidebar.php"; ?>
 
     <main class="contenido p-4">
         <div class="perfil ">
